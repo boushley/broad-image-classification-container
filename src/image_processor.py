@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from ultralytics import YOLO
 import cv2
@@ -16,9 +17,10 @@ def process_image(img_path: Path):
     r = results[0]
 
     # save annotated image
-    annotated = r.plot()  # numpy array (BGR)
-    out_img_path = OUT_DIR / f"{img_path.stem}_det.jpg"
-    cv2.imwrite(str(out_img_path), annotated)
+    if os.environ.get("SAVE_ANNOTATED_IMAGE", "false").lower() == "true":
+        annotated = r.plot()  # numpy array (BGR)
+        out_img_path = OUT_DIR / f"{img_path.stem}_det.jpg"
+        cv2.imwrite(str(out_img_path), annotated)
 
     # build json output
     detections = []

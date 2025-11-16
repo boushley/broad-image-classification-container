@@ -48,5 +48,8 @@ COPY src/ /app/src/
 # Create data dirs
 RUN mkdir -p /data/in /data/out
 
+# Set environment variable to control annotated image creation
+ENV SAVE_ANNOTATED_IMAGE="false"
+
 # Default command
 CMD ["python", "/app/src/detector.py"]
