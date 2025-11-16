@@ -43,10 +43,10 @@ RUN pip install --no-cache-dir \
     opencv-python==4.10.0.84
 
 # Copy your detector script (same as the CPU version)
-COPY detector.py /app/detector.py
+COPY src/ /app/src/
 
 # Create data dirs
 RUN mkdir -p /data/in /data/out
 
 # Default command
-CMD ["python", "/app/detector.py"]
+CMD ["python", "/app/src/detector.py"]
