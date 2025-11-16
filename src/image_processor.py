@@ -33,12 +33,15 @@ def process_image(img_path: Path):
             "bbox_xyxy": xyxy,
         })
 
+    # move or delete original
+    img_path.unlink()  # delete after processing
+    return detections
+
+def process_image_to_json(img_path: Path):
+    detections = process_image(img_path)
     out_json_path = OUT_DIR / f"{img_path.stem}.json"
     with out_json_path.open("w") as f:
         json.dump({
             "source_image": str(img_path.name),
             "detections": detections
         }, f, indent=2)
-
-    # move or delete original
-    img_path.unlink()  # delete after processing

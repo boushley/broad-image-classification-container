@@ -1,7 +1,7 @@
 import os
 import time
 from pathlib import Path
-from image_processor import process_image
+from image_processor import process_image_to_json
 from video_processor import process_video
 
 IN_DIR = Path("/data/in")
@@ -17,7 +17,7 @@ def main():
         for file in IN_DIR.iterdir():
             try:
                 if file.suffix.lower() in [".jpg", ".jpeg", ".png", ".bmp"]:
-                    process_image(file)
+                    process_image_to_json(file)
                     print(f"Processed image {file.name}", flush=True)
                 elif file.suffix.lower() in [".mp4", ".avi", ".mov"]:
                     process_video(file)
