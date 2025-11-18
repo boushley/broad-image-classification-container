@@ -1,11 +1,7 @@
-import json
-import os
 import subprocess
 import tempfile
 from pathlib import Path
-from image_processor import process_image
-
-OUT_DIR = Path("/data/out")
+from config import OUT_DIR, MODEL_FILE
 
 def process_video(video_file: Path):
     all_detections = []
@@ -24,21 +20,20 @@ def process_video(video_file: Path):
             capture_output=True,
         )
 
-        frame_files = sorted(list(temp_path.iterdir()))
-        for i, frame_file in enumerate(frame_files):
-            detections = process_image(frame_file)
-            all_detections.append({
-                "frame_number": i,
-                "frame_file": frame_file.name,
-                "detections": detections
-            })
-
-    out_json_path = OUT_DIR / f"{video_file.stem}.json"
-    with out_json_path.open("w") as f:
-        json.dump({
-            "source_video": str(video_file.name),
-            "frames": all_detections
-        }, f, indent=2)
-
+        result = subprocess.run(
+            [
+                "python",
+                "-m",
+                "megadetector.detector.run_detector_batch",
+                str(img_path),
+                "--model_file",
+                MODEL_FILE,
+                "--output_dir",
+                OUT_DIR
+            ],
+            capture_output=True,
+            check=True,
+            text=True,
+        )
 
     video_file.unlink()  # delete after processing
