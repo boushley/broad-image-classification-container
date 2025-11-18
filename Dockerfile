@@ -11,5 +11,7 @@ COPY src/ /app/src/
 # Create data dirs
 RUN mkdir -p /data/in /data/out
 
+ENV VERBOSE=false
+
 # Default command
 CMD ["python", "/app/src/detector.py"]

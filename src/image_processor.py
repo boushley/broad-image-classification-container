@@ -1,9 +1,10 @@
 import subprocess
 from pathlib import Path
 from config import OUT_DIR, MODEL_FILE
+from logging import verbose
 
 def process_image(img_path: Path):
-    print("Starting image processing for '%s':" % img_path.name)
+    verbose("Starting image processing for '%s':" % img_path.name)
     result = subprocess.run(
         [
             "python",
@@ -22,11 +23,11 @@ def process_image(img_path: Path):
         text=True,
     )
 
-    print("return code: (%d)" % result.returncode)
-    print("stdout: <<<<<<<<<<<<")
-    print(result.stdout)
-    print("stderr: <<<<<<<<<<<<")
-    print(result.stderr)
-    print(">>>>>>>>>>>>")
+    verbose("return code: (%d)" % result.returncode)
+    verbose("stdout: <<<<<<<<<<<<")
+    verbose(result.stdout)
+    verbose("stderr: <<<<<<<<<<<<")
+    verbose(result.stderr)
+    verbose(">>>>>>>>>>>>")
 
     img_path.unlink()
