@@ -1,10 +1,10 @@
 import subprocess
 import tempfile
 from pathlib import Path
-from config import OUT_DIR, MODEL_FILE
+from config import MODEL_FILE
 from logging import verbose
 
-def process_video(video_file: Path):
+def process_video(video_file: Path, output_dir: Path):
     verbose("Beginning to process '%s'" % video_file.name)
     all_detections = []
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -24,7 +24,7 @@ def process_video(video_file: Path):
 
         verbose("ffmpeg return code: (%d)" % result.returncode)
 
-        output_file = Path(OUT_DIR) / (video_file.stem + ".json")
+        output_file = output_dir / (video_file.stem + ".json")
 
         result = subprocess.run(
             [
@@ -50,5 +50,3 @@ def process_video(video_file: Path):
         verbose("stderr: <<<<<<<<<<<<")
         verbose(result.stderr)
         verbose(">>>>>>>>>>>>")
-
-    video_file.unlink()

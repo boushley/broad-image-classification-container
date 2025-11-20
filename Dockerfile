@@ -9,7 +9,7 @@ RUN rm -rf /code
 COPY src/ /app/src/
 
 # Create data dirs
-RUN mkdir -p /data/in /data/out
+RUN mkdir -p /data
 
 ENV VERBOSE=false
 
