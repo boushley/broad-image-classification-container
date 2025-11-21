@@ -27,7 +27,7 @@ def process_image(img_path: Path, output_dir: Path):
     # The detector creates a file named after the image, but we want a
     # consistent name.
     os.rename(
-        output_dir / (img_path.stem + ".json"),
+        output_dir / (img_path.stem + "_detections.jpg"),
         output_dir / "megadetector.json",
     )
 

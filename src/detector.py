@@ -1,4 +1,3 @@
-import os
 import time
 from pathlib import Path
 from image_processor import process_image
@@ -20,11 +19,18 @@ def main():
                 continue
 
             output_dir = DATA_DIR / f"{file.name}-data"
+            output_file = output_dir / "megadetector.json"
+
+            if output_file.exists():
+                continue
 
             lock_name = f"{file.name}-megadetector"
             lock = FolderLock(LOCKS_DIR, lock_name)
             if lock.acquire():
                 with lock:
+                    if output_file.exists():
+                        continue
+
                     output_dir.mkdir(exist_ok=True)
 
                     try:
