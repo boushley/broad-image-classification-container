@@ -24,7 +24,7 @@ def process_video(video_file: Path, output_dir: Path):
 
         verbose("ffmpeg return code: (%d)" % result.returncode)
 
-        output_file = output_dir / (video_file.stem + ".json")
+        output_file = output_dir / "megadetector.json"
 
         result = subprocess.run(
             [
