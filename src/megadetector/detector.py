@@ -2,7 +2,7 @@ import time
 from pathlib import Path
 from image_processor import process_image
 from video_processor import process_video
-from folder_locking import FolderLock
+from src.lib.folder_locking import FolderLock
 
 DATA_DIR = Path("/data/")
 LOCKS_DIR = DATA_DIR / "locks"
