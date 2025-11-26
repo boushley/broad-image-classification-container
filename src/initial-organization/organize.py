@@ -1,7 +1,11 @@
 import os
 import json
 import shutil
-from uuid_v9 import uuid9
+import uuid_v9
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Define the source and destination directories
 ingest_dir = "/data/ingest"
@@ -19,7 +23,7 @@ for root, _, files in os.walk(ingest_dir):
         original_file_path = os.path.join(root, filename)
 
         # Generate a UUID v9
-        new_uuid = uuid9()
+        new_uuid = uuid_v9.uuidv9()
 
         # Get the file extension
         _, extension = os.path.splitext(filename)
@@ -51,4 +55,6 @@ for root, _, files in os.walk(ingest_dir):
         with open(json_filepath, "w") as f:
             json.dump(json_data, f, indent=4)
 
-print("Data organization complete.")
+        logging.info(f"Found {original_file_path} copying to {asset_filepath} and creating base data at {json_filepath}")
+
+logging.info("Data organization complete.")
