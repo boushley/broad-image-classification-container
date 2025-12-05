@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: initial-organization
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: ingest-container
+        image: boushley/work-items:initial-latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: nfs-root
+          mountPath: /data/ingest
+          subPath: datasets
+          readOnly: true
+        - name: nfs-root
+          mountPath: /data/assets
+          subPath: assets
+        - name: nfs-root
+          mountPath: /data/base-data
+          subPath: base-data
+      restartPolicy: Never
+      volumes:
+      - name: nfs-root
+        nfs:
+          server: 192.168.1.50
+          path: /mnt/user/data
